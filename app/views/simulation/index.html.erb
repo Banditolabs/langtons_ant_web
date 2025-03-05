@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Langtons Ant</title>
+    <style>
+        table { border-collapse: collapse; }
+        td { width: 20px; height: 20px; border: 1px solid black; }
+        .black { background-color: black; }
+        .white { background-color: white; }
+    </style>
+</head>
+<body>
+    <h1>Langtons Ant</h1>
+    <table id="grid"></table>
+
+    <script>
+        function updateGrid() {
+            fetch("/move")
+                .then(response => response.json())
+                .then(data => {
+                    let grid = document.getElementById("grid");
+                    grid.innerHTML = ""; // Clear existing table
+                    data.grid.forEach(row => {
+                        let tr = document.createElement("tr");
+                        row.forEach(cell => {
+                            let td = document.createElement("td");
+                            td.className = cell === 1 ? "black" : "white";  // ✅ Update colors
+                            tr.appendChild(td);
+                        });
+                        grid.appendChild(tr);
+                    });
+                });
+        }
+
+        // Update grid every 200ms
+        updateGrid();
+        setInterval(updateGrid, 5);
+    </script>
+</body>
+</html>

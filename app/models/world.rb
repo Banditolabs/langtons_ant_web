@@ -1,26 +1,21 @@
 class World
-  attr_reader :cells, :x, :y
+  attr_reader :grid, :width, :height
 
-  def initialize(x = 10, y = 10)
-    @x = x
-    @y = y
-    @cells = Array.new(y) {Array.new(x) {Cell.new}}
+  def initialize(width = 10, height = 10)
+    @width = width
+    @height = height
+    @grid = Array.new(height) { Array.new(width) { Cell.new } }
   end
 
-  def gps(position)
-    @cells[position.y][position.x]
+  def at(position)
+    @grid[position.y][position.x]
   end
 
-  def to_s
-    @cells.collect do | row |
-      row_string = row.collect do | cell |
-        if cell.white?
-          "."
-        else
-          "$"
-        end
-      end.join
-      row_string += "/n"
-    end.join
+  def flip(position)
+    @grid[position.y][position.x] = @grid[position.y][position.x] == 0 ? 1 : 0
+  end
+
+  def to_a
+    @grid.map { |row| row.map { |cell| cell.color } }
   end
 end

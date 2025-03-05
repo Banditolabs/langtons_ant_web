@@ -2,18 +2,14 @@ class Cell
   attr_reader :color
 
   def initialize
-    @color = :white
+    @color = 0
   end
 
   def white?
-    @color == :white
+    @color == 0
   end
 
   def toggle_color
-    if white?
-      @color = :black
-    else
-      @color = :white
-    end
+    @color = @color == 0 ? 1 : 0
   end
 end
